@@ -51,7 +51,111 @@ func sliceDemo() {
 	fmt.Printf("修改了subSlice后: %v\n", slice)
 }
 
+func mapDemo() {
+	fmt.Println("\n=== 映射示例 ===")
+
+	// 声明映射
+	var m map[string]int
+	fmt.Printf("声明但是不初始化: %v, nil: %t\n", m, m == nil)
+
+	// 使用make初始化
+	m = make(map[string]int)
+	m["apple"] = 5
+	m["banana"] = 3
+	fmt.Printf("添加后: %v\n", m)
+
+	// 直接初始化
+	m2 := map[string]int{
+		"apple":  10,
+		"banana": 5,
+		"orange": 8,
+	}
+	fmt.Printf("直接初始化: %v\n", m2)
+
+	// 读取值
+	value := m2["apple"]
+	fmt.Println("apple的值: %d\n", value)
+	value2 := m2["orange"]
+	fmt.Printf("orange的值: %d\n", value2)
+
+	m2["orange"] = 100
+	fmt.Printf("orange的值: %d\n", m2["orange"])
+
+	// 检查key是否存在
+	value, ok := m2["grape"]
+	fmt.Printf("grade存在: %t, 值: %d\n", ok, value)
+
+	valueA, okA := m2["apple"]
+	fmt.Printf("apple存在: %t, 值: %d\n", okA, valueA)
+}
+
+func pointerDemo() {
+	fmt.Println("\n=== 指针示例 ===")
+
+	x := 10
+	fmt.Printf("x的值为: %d\n", x)
+
+	// 获取地址
+	p := &x
+	fmt.Printf("x的地址: %p\n", p)
+	fmt.Printf("指针的值: %d\n", *p)
+
+	m := p
+	fmt.Printf("m: %p\n", m)
+	fmt.Printf("m指向的值: %d\n", *m)
+
+	// 通过指针修改值
+	*p = 20
+	fmt.Printf("修改后x的值为: %d\n", x)
+
+	// 指针作为函数参数
+	increment(&x)
+	fmt.Printf("函数修改后的x的值为: %d\n", x)
+
+	// nil指针
+	var ptr *int
+	fmt.Printf("nil指针: %v\n", ptr)
+
+	fmt.Println("\n=== 值传递 vs 指针传递 ===")
+
+	// 值传递示例
+	a := 10
+	fmt.Printf("调用前a=%d\n", a)
+	valuePass(a)
+	fmt.Printf("调用后 a = %d (值未改变)\n", a)
+
+	// 指针传递示例
+	b := 10
+	fmt.Printf("\n调用前 b = %d\n", b)
+	pointerPass(&b)
+	fmt.Printf("调用后 b = %d(值已改变)\n", b)
+
+	// 详细说明
+	fmt.Println("\n关键区别")
+	fmt.Println("1. 值传递：函数接收的是值的副本，修改副本不影响原来的值")
+	fmt.Println("2. 指针传递：函数接收的是地址，通过地址可以直接修改原来的值")
+}
+
+func valuePass(num int) {
+	fmt.Printf(" 函数内接受到的值: %d\n", num)
+	num = 100 // 修改副本，不影响赋值
+	fmt.Printf(" 函数内修改后: %d\n", num)
+}
+
+func pointerPass(num *int) {
+	fmt.Printf(" 函数内接收到的地址: %p\n", num)
+	fmt.Printf(" 函数内接收到的值: %d\n", *num)
+	*num = 100 // 通过指针修改原值
+	fmt.Printf(" 函数内修改后: %d\n", *num)
+}
+
+func increment(ptr *int) {
+	*ptr++
+}
+
 func main() {
 	//arrayDemo()
-	sliceDemo()
+	//sliceDemo()
+	//mapDemo()
+	pointerDemo()
 }
